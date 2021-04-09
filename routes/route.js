@@ -3,10 +3,7 @@ const router = express.Router();
 
 const db= require ('../models/db_schema');
 
-//route for home page
-router.get('/',(req,res)=>{
-    res.send('we are on home');
-});
+
 //gets back all data
 router.get('/post', async(req,res)=>{
     try{

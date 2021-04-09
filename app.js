@@ -10,10 +10,12 @@ app.use(bp.json());
 //render ejs files
 // app.use(express.static(path.join(__dirname, '../')));
 
-app.get('/',(req,res)=>{
-    res.sendFile((path.join(__dirname, './templates/dg.html')))
-});
+const newRouter = require('./routes/new');
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use('/', newRouter);
 
 //database connectivity
 
@@ -28,6 +30,7 @@ const route = require ('./routes/route');
 
 //middleware for route
 app.use('/' , route);
+
 
 //listening
 app.listen(1234,()=>{

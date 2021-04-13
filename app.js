@@ -5,17 +5,8 @@ const mongoose = require('mongoose');
 const bp = require('body-parser');
 const path = require('path');
 
-app.use(bp.json());
-
-//render ejs files
-// app.use(express.static(path.join(__dirname, '../')));
-
-const newRouter = require('./routes/new');
-
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-app.use('/', newRouter);
+//middleware for route and new
+app.use(bp.urlencoded({extended:true}));
 
 //database connectivity
 
@@ -23,14 +14,15 @@ mongoose.connect(process.env.dburl, { useNewUrlParser: true,useUnifiedTopology: 
     console.log("db connected.");
 });
 
+//set path directory for ejs files
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 //import routes
 const route = require ('./routes/route');
-
-
-//middleware for route
+const newRouter = require('./routes/new');
 app.use('/' , route);
-
+app.use('/', newRouter);
 
 //listening
 app.listen(1234,()=>{
